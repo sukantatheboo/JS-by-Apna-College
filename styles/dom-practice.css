@@ -1,0 +1,14 @@
+body {
+  background-color: gray;
+  color: white;
+}
+.para {
+  font-size: 20px;
+  /* background-color: brown; */
+  text-align: center;
+}
+.newClass {
+  background-color: darkolivegreen;
+}
+
+  

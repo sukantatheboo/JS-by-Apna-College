@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Calculator</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Add Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Use Inter as the default font */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom styles for a "glass" effect on the calculator */
+        .calculator-body {
+            background: rgba(255, 255, 255, 0.1); /* Light glass effect for dark mode */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        /* Light mode glass effect */
+        .light .calculator-body {
+            background: rgba(255, 255, 255, 0.4); /* Lighter glass for light mode */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.17);
+        }
+        
+        /* Custom styling for buttons for better touch feedback */
+        .calc-button {
+            transition: all 0.1s ease-in-out;
+        }
+        .calc-button:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        /* Custom display styling */
+        .calculator-display {
+            font-family: 'ui-monospace', 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", monospace;
+            /* Prevent text overflow */
+            overflow-x: auto;
+            /* Hide scrollbar */
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .calculator-display::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, and Opera */
+        }
+    </style>
+    <script>
+        // Toggle dark mode
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+        }
+    </script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 flex items-center justify-center min-h-screen transition-colors duration-300">
+
+    <div class="absolute top-4 right-4">
+        <button onclick="toggleDarkMode()" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none">
+            <!-- Sun icon for light mode -->
+            <svg class="w-6 h-6 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            <!-- Moon icon for dark mode -->
+            <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+        </button>
+    </div>
+
+    <!-- Calculator Body -->
+    <div class="calculator-body w-full max-w-xs p-4 sm:p-6 rounded-2xl">
+
+        <!-- Display -->
+        <div class="mb-4">
+            <div id="display" class="calculator-display w-full h-24 p-4 text-right text-4xl sm:text-5xl font-mono text-gray-900 dark:text-white bg-gray-200 dark:bg-gray-800 bg-opacity-50 dark:bg-opacity-50 rounded-lg overflow-hidden flex items-end justify-end">
+                0
+            </div>
+        </div>
+
+        <!-- Buttons Grid -->
+        <div class="grid grid-cols-4 gap-2 sm:gap-3">
+            <!-- Row 1: Clear, Delete, Modulus, Divide -->
+            <button data-action="clear" class="calc-button col-span-2 bg-red-400 dark:bg-red-500 hover:bg-red-500 dark:hover:bg-red-600 text-white font-bold py-4 rounded-lg text-xl sm:text-2xl">C</button>
+            <button data-action="delete" class="calc-button bg-gray-400 dark:bg-gray-600 hover:bg-gray-500 dark:hover:bg-gray-500 text-gray-900 dark:text-white font-bold py-4 rounded-lg text-xl sm:text-2xl">DEL</button>
+            <button data-action="operator" class="calc-button bg-yellow-400 dark:bg-yellow-500 hover:bg-yellow-500 dark:hover:bg-yellow-600 text-white font-bold py-4 rounded-lg text-xl sm:text-2xl">/</button>
+
+            <!-- Row 2: 7, 8, 9, Multiply -->
+            <button data-action="number" class="calc-button bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-bold py-4 rounded-lg text-xl sm:text-2xl">7</button>
+            <button data-action="number" class="calc-button bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-bold py-4 rounded-lg text-xl sm:text-2xl">8</button>
+            <button data-action="number" class="calc-button bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-bold py-4 rounded-lg text-xl sm:text-2xl">9</button>
+            <button data-action="operator" class="calc-button bg-yellow-400 dark:bg-yellow-500 hover:bg-yellow-500 dark:hover:bg-yellow-600 text-white font-bold py-4 rounded-lg text-xl sm:text-2xl">*</button>
+
+            <!-- Row 3: 4, 5, 6, Subtract -->
+            <button data-action="number" class="calc-button bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-bold py-4 rounded-lg text-xl sm:text-2xl">4</button>
+            <button data-action="number" class="calc-button bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-bold py-4 rounded-lg text-xl sm:text-2xl">5</button>
+            <button data-action="number" class="calc-button bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-bold py-4 rounded-lg text-xl sm:text-2xl">6</button>
+            <button data-action="operator" class="calc-button bg-yellow-400 dark:bg-yellow-500 hover:bg-yellow-500 dark:hover:bg-yellow-600 text-white font-bold py-4 rounded-lg text-xl sm:text-2xl">-</button>
+
+            <!-- Row 4: 1, 2, 3, Add -->
+            <button data-action="number" class="calc-button bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-bold py-4 rounded-lg text-xl sm:text-2xl">1</button>
+            <button data-action="number" class="calc-button bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-bold py-4 rounded-lg text-xl sm:text-2xl">2</button>
+            <button data-action="number" class="calc-button bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-bold py-4 rounded-lg text-xl sm:text-2xl">3</button>
+            <button data-action="operator" class="calc-button bg-yellow-400 dark:bg-yellow-500 hover:bg-yellow-500 dark:hover:bg-yellow-600 text-white font-bold py-4 rounded-lg text-xl sm:text-2xl">+</button>
+
+            <!-- Row 5: 0, Decimal, Equals -->
+            <button data-action="number" class="calc-button col-span-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-bold py-4 rounded-lg text-xl sm:text-2xl">0</button>
+            <button data-action="decimal" class="calc-button bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-bold py-4 rounded-lg text-xl sm:text-2xl">.</button>
+            <button data-action="equals" class="calc-button bg-green-400 dark:bg-green-500 hover:bg-green-500 dark:hover:bg-green-600 text-white font-bold py-4 rounded-lg text-xl sm:text-2xl">=</button>
+        </div>
+    </div>
+
+    <!-- Custom Modal for Alerts -->
+    <div id="alertModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden transition-opacity duration-300">
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl max-w-sm w-full mx-4 transform transition-all scale-95 opacity-0">
+            <h3 id="alertTitle" class="text-lg font-medium text-gray-900 dark:text-white mb-2">Alert</h3>
+            <p id="alertMessage" class="text-sm text-gray-600 dark:text-gray-300 mb-4">Cannot divide by zero!</p>
+            <button id="alertClose" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">
+                OK
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const display = document.getElementById('display');
+            const buttons = document.querySelectorAll('.calc-button');
+            const alertModal = document.getElementById('alertModal');
+            const alertMessage = document.getElementById('alertMessage');
+            const alertClose = document.getElementById('alertClose');
+
+            let currentOperand = '';
+            let previousOperand = '';
+            let operation = undefined;
+            let justComputed = false; // Flag to check if '=' was just pressed
+
+            // --- Custom Alert ---
+            function showAlert(message) {
+                alertMessage.textContent = message;
+                alertModal.classList.remove('hidden');
+                // Force reflow to trigger transition
+                void alertModal.offsetWidth; 
+                alertModal.classList.add('opacity-100');
+                alertModal.querySelector('div').classList.add('scale-100', 'opacity-100');
+            }
+
+            function closeAlert() {
+                alertModal.querySelector('div').classList.remove('scale-100', 'opacity-100');
+                alertModal.classList.remove('opacity-100');
+                setTimeout(() => {
+                    alertModal.classList.add('hidden');
+                }, 300); // Match transition duration
+            }
+
+            alertClose.addEventListener('click', closeAlert);
+            alertModal.addEventListener('click', (e) => {
+                if (e.target === alertModal) {
+                    closeAlert();
+                }
+            });
+
+            // --- Calculator Logic Functions ---
+
+            function clear() {
+                currentOperand = '';
+                previousOperand = '';
+                operation = undefined;
+                justComputed = false;
+                updateDisplay('0');
+            }
+
+            function deleteNumber() {
+                if (justComputed) {
+                    clear();
+                    return;
+                }
+                currentOperand = currentOperand.toString().slice(0, -1);
+                if (currentOperand === '') {
+                    updateDisplay('0');
+                } else {
+                    updateDisplay();
+                }
+            }
+
+            function appendNumber(number) {
+                if (justComputed) {
+                    currentOperand = number;
+                    justComputed = false;
+                } else {
+                    if (number === '0' && currentOperand === '0') return;
+                    if (number !== '0' && currentOperand === '0') {
+                        currentOperand = number;
+                    } else {
+                        currentOperand = currentOperand.toString() + number.toString();
+                    }
+                }
+                updateDisplay();
+            }
+
+            function appendDecimal() {
+                if (justComputed) {
+                    currentOperand = '0.';
+                    justComputed = false;
+                } else {
+                    if (currentOperand.includes('.')) return;
+                    if (currentOperand === '') {
+                        currentOperand = '0.';
+                    } else {
+                        currentOperand = currentOperand.toString() + '.';
+                    }
+                }
+                updateDisplay();
+            }
+
+            function chooseOperation(op) {
+                if (currentOperand === '' && previousOperand === '') return;
+                
+                if (currentOperand === '' && operation !== undefined) {
+                    // Allows changing the operator
+                    operation = op;
+                    return;
+                }
+                
+                if (previousOperand !== '') {
+                    compute();
+                }
+                
+                operation = op;
+                previousOperand = currentOperand;
+                currentOperand = '';
+                justComputed = false;
+            }
+
+            function compute() {
+                let computation;
+                const prev = parseFloat(previousOperand);
+                const current = parseFloat(currentOperand);
+
+                if (isNaN(prev) || isNaN(current)) return;
+
+                switch (operation) {
+                    case '+':
+                        computation = prev + current;
+                        break;
+                    case '-':
+                        computation = prev - current;
+                        break;
+                    case '*':
+                        computation = prev * current;
+                        break;
+                    case '/':
+                        if (current === 0) {
+                            showAlert('Cannot divide by zero!');
+                            clear();
+                            return;
+                        }
+                        computation = prev / current;
+                        break;
+                    default:
+                        return;
+                }
+                
+                // Round to avoid floating point issues
+                computation = Math.round(computation * 1000000) / 1000000;
+                
+                currentOperand = computation.toString();
+                operation = undefined;
+                previousOperand = '';
+                justComputed = true; // Set flag
+                updateDisplay();
+            }
+
+            function updateDisplay(value) {
+                let displayValue = value;
+                if (value === undefined) {
+                    displayValue = currentOperand;
+                }
+
+                if (displayValue === '' || displayValue === '-') {
+                    displayValue = '0';
+                }
+
+                // Format for readability
+                try {
+                    // Check if it's a number and not ending in a decimal
+                    if (displayValue.includes('.') && !displayValue.endsWith('.')) {
+                        const parts = displayValue.split('.');
+                        parts[0] = parseFloat(parts[0]).toLocaleString('en-US');
+                        display.innerText = parts.join('.');
+                    } else if (!displayValue.includes('.')) {
+                        display.innerText = parseFloat(displayValue).toLocaleString('en-US');
+                    } else {
+                        display.innerText = displayValue;
+                    }
+                } catch (e) {
+                    display.innerText = displayValue;
+                }
+
+                // Adjust font size based on length
+                if (display.innerText.length > 10) {
+                    display.classList.remove('text-4xl', 'sm:text-5xl');
+                    display.classList.add('text-3xl', 'sm:text-4xl');
+                } else if (display.innerText.length > 8) {
+                    display.classList.remove('text-4xl', 'sm:text-5xl');
+                    display.classList.add('text-4xl', 'sm:text-4xl');
+                } else {
+                    display.classList.remove('text-3xl', 'sm:text-4xl', 'text-4xl');
+                    display.classList.add('text-4xl', 'sm:text-5xl');
+                }
+            }
+            
+            // --- Event Listeners ---
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const action = button.dataset.action;
+                    const value = button.innerText;
+
+                    switch (action) {
+                        case 'number':
+                            appendNumber(value);
+                            break;
+                        case 'operator':
+                            chooseOperation(value);
+                            break;
+                        case 'decimal':
+                            appendDecimal();
+                            break;
+                        case 'clear':
+                            clear();
+                            break;
+                        case 'delete':
+                            deleteNumber();
+                            break;
+                        case 'equals':
+                            compute();
+                            break;
+                    }
+                });
+            });
+
+            // Keyboard support
+            window.addEventListener('keydown', (e) => {
+                let key = e.key;
+                if (key >= '0' && key <= '9') {
+                    e.preventDefault();
+                    appendNumber(key);
+                } else if (key === '.') {
+                    e.preventDefault();
+                    appendDecimal();
+                } else if (key === '+' || key === '-' || key === '*' || key === '/') {
+                    e.preventDefault();
+                    chooseOperation(key);
+                } else if (key === 'Enter' || key === '=') {
+                    e.preventDefault();
+                    compute();
+                } else if (key === 'Backspace') {
+                    e.preventDefault();
+                    deleteNumber();
+                } else if (key === 'Escape' || key === 'c' || key === 'C') {
+                    e.preventDefault();
+                    clear();
+                }
+            });
+
+            // Set initial display
+            clear();
+        });
+    </script>
+</body>
+</html>

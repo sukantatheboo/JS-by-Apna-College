@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>More details about Event in JS</title>
+    <style>
+      .comment {
+        border: 2px solid black;
+        border-radius: 32px;
+        background-color: dodgerblue;
+        margin: 10px;
+        padding: 10px;
+      }
+      body {
+        border: 2px solid black;
+        margin: 2px;
+        padding: 10px;
+      }
+      section {
+        border: 2px solid gray;
+        margin: 2px;
+        padding: 10px;
+      }
+      ul {
+        border: 2px solid dodgerblue;
+        margin: 2px;
+        padding: 10px;
+      }
+      li {
+        border: 2px solid darkcyan;
+        margin: 2px;
+        padding: 10px;
+        list-style: none;
+      }
+    </style>
+  </head>
+  <body id="main-body">
+    <h2 id="heading-1">Event Handler</h2>
+    <button id="update-title">Update Title</button>
+    <br />
+    <br />
+    <button onclick="makeYellow()">Make Yellow</button>
+    <!-- <button id="btn-dark">Make Dark</button> -->
+    <br />
+    <br />
+    <p id="name">No Name</p>
+    <input id="name-holder" type="text" placeholder="Enter Your Name" />
+    <button id="submit-btn">Submit</button>
+    <br />
+    <br />
+    <h2>My Awesome Comment Box</h2>
+    <section>
+      <h3>All comments here</h3>
+      <div id="comment-container">
+        <p class="comment">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem omnis
+          eveniet, molestiae quae porro quod neque, modi culpa laboriosam,
+          dolorum illum est. Quasi exercitationem harum architecto corporis ab
+          temporibus in?
+        </p>
+        <p class="comment">
+          Omnis itaque aperiam quo vel perspiciatis maxime laborum id
+          perferendis deserunt rem minima atque enim quia consequatur provident
+          iusto dolor rerum, quaerat sapiente voluptatem eos? Accusantium
+          possimus quae labore repellendus.
+        </p>
+        <p class="comment">
+          Mollitia nesciunt perferendis maiores iure, maxime possimus culpa
+          ipsam dolore, laudantium temporibus exercitationem vitae molestias,
+          numquam porro hic delectus. Sed impedit placeat eveniet quaerat ipsam
+          dignissimos vero eos voluptatibus. Corrupti?
+        </p>
+      </div>
+      <textarea name="" id="comment-box" cols="60" rows="10"></textarea>
+      <br />
+      <button id="pst-btn">Post</button>
+      <br />
+      <br />
+      <input type="text" id="user-name" placeholder="Enter ur Name" />
+      <button id="btn-mouse">Micky mouse</button>
+      <br />
+      <br />
+      <h2 id="sec-info">My Secret Info</h2>
+      <input id="input-delete" type="text" placeholder="Write 'Delete'" />
+      <button id="btn-delete" disabled>Delete</button>
+
+      <!-- Explore Event Bubble -->
+
+      <h2>Event Bubble</h2>
+      <section id="list-container">
+        <h3>List of things</h3>
+        <!-- ul>li#item-$*6>lorem2 -->
+        <ul id="list-items">
+          <li id="item-1">Lorem, ipsum.</li>
+          <li id="item-2">Possimus, libero.</li>
+          <li id="item-3">Tempora, omnis.</li>
+          <li id="item-4">Incidunt, odit?</li>
+          <li id="item-5">Perspiciatis, quod!</li>
+          <li id="item-6">Nesciunt, eligendi!</li>
+        </ul>
+      </section>
+
+      <!-- Event Delegate -->
+
+      <h2>Explore the concept of Event Delegate</h2>
+      <!-- ol#item-list>li.item*6{My Awesome item - $} -->
+      <ol id="item-list">
+        <li class="item">My Awesome item - 1</li>
+        <li class="item">My Awesome item - 2</li>
+        <li class="item">My Awesome item - 3</li>
+        <li class="item">My Awesome item - 4</li>
+        <li class="item">My Awesome item - 5</li>
+        <li class="item">My Awesome item - 6</li>
+      </ol> 
+      <button id="add-new-item">Add new item</button>
+    </section>
+    <script src="js/event-part-2.js"></script>
+  </body>
+</html>

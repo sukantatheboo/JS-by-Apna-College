@@ -1,0 +1,32 @@
+
+#header {
+    color: beige;
+}
+.paragraph {
+    background-color: rgb(102, 172, 200);
+    border-radius: 10px;
+    padding-left: 20px;
+}
+
+.box {
+    height: 100px;
+    width: 100px;
+    background-color: burlywood;
+    margin-bottom: 10px;
+    border: 2px solid rgb(97, 207, 203);
+}
+div{
+    color: white;
+    background-color: dodgerblue;
+    height: 100px;
+    width: 100px;
+    border: 1px solid white;
+}
+.dark {
+    background-color: black;
+    color: white;
+}
+.light{
+    background-color: white;
+    color: black;
+}

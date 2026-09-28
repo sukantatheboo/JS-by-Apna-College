@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopping Cart</title>
+  </head>
+  <body>
+    <input id="product" type="text" placeholder="Product" />
+    <input id="quantity" type="number" placeholder="Quantity" />
+    <br />
+    <br />
+    <button onclick="handleAddProducts()">Add To Cart</button>
+    <br>
+    <br>
+    <button id="clear">Clear</button>
+    <div>
+      <h3>Added Products</h3>
+      <div id="parent-container">
+        <ul id="products-container"></ul>
+      </div>
+    </div>
+    
+    <script src="js/cart.js"></script>
+  </body>
+</html>
